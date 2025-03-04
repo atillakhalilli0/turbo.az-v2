@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navbar with Drawer</title>
+  <link rel="stylesheet" href="output.css">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white shadow-md h-16 fixed w-full top-0 z-20">
+      <div class="container mx-auto px-4 h-full flex items-center justify-between">
+        <div class="flex items-center">
+          <a href="#" class="text-xl font-bold">Brand Logo</a>
+        </div>
+        
+        <div class="hidden md:flex items-center space-x-6">
+          <a href="#" class="hover:text-blue-200 transition-colors">Home</a>
+          <a href="#" class="hover:text-blue-200 transition-colors">About</a>
+          <a href="#" class="hover:text-blue-200 transition-colors">Services</a>
+          <a href="#" class="hover:text-blue-200 transition-colors">Contact</a>
+        </div>
+        
+        <button id="drawerToggle" class="flex items-center p-2 rounded hover:bg-blue-700 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+          <span class="ml-1">Menu</span>
+        </button>
+      </div>
+    </nav>
+    
+    <!-- Drawer - Using Tailwind's transform and transition utilities -->
+    <div id="drawer" class="fixed w-full transform -translate-y-full transition-transform duration-300 ease-in-out top-16 left-0 bg-white shadow-lg p-4 z-10">
+      <div class="container mx-auto">
+        <div class="grid md:grid-cols-3 gap-6">
+          <div>
+            <h3 class="text-lg font-semibold mb-2 text-blue-600">Products</h3>
+            <ul class="space-y-2">
+              <li><a href="#" class="text-gray-700 hover:text-blue-600">Product 1</a></li>
+              <li><a href="#" class="text-gray-700 hover:text-blue-600">Product 2</a></li>
+              <li><a href="#" class="text-gray-700 hover:text-blue-600">Product 3</a></li>
+              <li><a href="#" class="text-gray-700 hover:text-blue-600">Product 4</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-2 text-blue-600">Services</h3>
+            <ul class="space-y-2">
+              <li><a href="#" class="text-gray-700 hover:text-blue-600">Service 1</a></li>
+              <li><a href="#" class="text-gray-700 hover:text-blue-600">Service 2</a></li>
+              <li><a href="#" class="text-gray-700 hover:text-blue-600">Service 3</a></li>
+              <li><a href="#" class="text-gray-700 hover:text-blue-600">Service 4</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-2 text-blue-600">Resources</h3>
+            <ul class="space-y-2">
+              <li><a href="#" class="text-gray-700 hover:text-blue-600">Resource 1</a></li>
+              <li><a href="#" class="text-gray-700 hover:text-blue-600">Resource 2</a></li>
+              <li><a href="#" class="text-gray-700 hover:text-blue-600">Resource 3</a></li>
+              <li><a href="#" class="text-gray-700 hover:text-blue-600">Resource 4</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Page Content -->
+    <main class="container mx-auto pt-24 px-4">
+      <h1 class="text-3xl font-bold mb-6">Welcome to our website</h1>
+      <p class="mb-4">Click the Menu button in the navbar to toggle the drawer.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula.</p>
+    </main>
+    
+    <script>
+      // Drawer toggle functionality
+      const drawerToggle = document.getElementById('drawerToggle');
+      const drawer = document.getElementById('drawer');
+      
+      drawerToggle.addEventListener('click', () => {
+        // Toggle translate-y classes instead of using custom CSS
+        if (drawer.classList.contains('-translate-y-full')) {
+          drawer.classList.remove('-translate-y-full');
+          drawer.classList.add('translate-y-0');
+          
+          // Change arrow direction
+          const arrow = drawerToggle.querySelector('svg');
+          arrow.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />';
+        } else {
+          drawer.classList.add('-translate-y-full');
+          drawer.classList.remove('translate-y-0');
+          
+          // Reset arrow
+          const arrow = drawerToggle.querySelector('svg');
+          arrow.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />';
+        }
+      });
+      
+      // Close drawer when clicking outside of it
+      document.addEventListener('click', (event) => {
+        if (!drawer.contains(event.target) && !drawerToggle.contains(event.target) && !drawer.classList.contains('-translate-y-full')) {
+          drawer.classList.add('-translate-y-full');
+          drawer.classList.remove('translate-y-0');
+          
+          // Reset arrow
+          const arrow = drawerToggle.querySelector('svg');
+          arrow.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />';
+        }
+      });
+    </script>
+  </body>
+</html>
