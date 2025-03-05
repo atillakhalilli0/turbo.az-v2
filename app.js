@@ -109,7 +109,7 @@ function showCars() {
               <div class="pt-3 border-t border-gray-100 flex items-center justify-between">
                 <div class="text-[22px] font-bold text-green-700">${item.qiymet} ₼</div>
                 <div class="flex space-x-2">
-                 <a href="http://127.0.0.1:5500/details.html?id=${item.id}" target="_blank" onclick="prepareDetailsLink(this, ${item.id}); return true;" class="flex items-center bg-blue-700 hover:bg-blue-800 text-white text-sm font-medium px-3 py-2 rounded-lg transition-colors">
+                 <a href="https://turbo-az-v2/details.html?id=${item.id}" target="_blank" onclick="prepareDetailsLink(this, ${item.id}); return true;" class="flex items-center bg-blue-700 hover:bg-blue-800 text-white text-sm font-medium px-3 py-2 rounded-lg transition-colors">
                     <i class="fa-solid fa-eye mr-2"></i> Bax
                  </a>
                   <a href="#" onclick="addBasket(${item.id}); event.preventDefault();" class="flex items-center justify-center w-9 h-9 bg-green-200 hover:bg-green-300 text-green-600 hover:text-green-800 rounded-lg transition-colors">
