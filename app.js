@@ -375,39 +375,38 @@ function showBasket() {
   totalPrice.innerHTML = `Total: ${total} AZN`;
   sidebar.innerHTML = `
     <h2 class="cursor-pointer" onclick="toggleSidebar()"><i class="fa-solid fa-x mr-2"></i>Close</h2>  
-    <div id="totalPrice">Total: ${total} AZN</div>
+    <div id="totalPrice">Total: ${total} ₼</div>
   `;
   basket.forEach((item) => {
     sidebar.innerHTML += `
-      <div class="bg-slate-400 rounded-lg px-8 mb-4 py-3 flex justify-between gap-4">
-          <div class="flex gap-4">
-              <img class="w-[250px] h-[200px] rounded-lg object-cover" src="${
-                item.img
-              }" alt="car-img">
-              <div class="flex flex-col">
-                  <h1>${item.marka}, ${item.model}</h1>
-                  <h1>Ili: ${item.il}</h1>
-                  <h1>Motor: ${item.mator}</h1>
-                  <h1 class="flex gap-4"><span class="cursor-pointer px-3 bg-blue-700 rounded text-white" onclick="handleCount(-1, ${
-                    item.id
-                  })">-</span>Sayi: ${
-      item.count
-    }<span class="cursor-pointer px-3 bg-blue-700 rounded text-white" onclick="handleCount(+1, ${
-      item.id
-    })">+</span></h1>
-              </div>
+      <div class="w-full p-4 bg-white rounded-lg shadow-2xl mb-6">
+        <div class="flex max-md:flex-col items-center space-x-4">
+          <img src="${item.img}" alt="car-img" class="md:w-1/3 w-36 h-40 object-cover rounded">
+          <div class="flex-1 max-md:flex items-center max-md:flex-col">
+            <h2 class="text-lg font-semibold">${item.marka}, ${item.model}</h2>
+            <p class="text-gray-600">${item.mator}, ${item.il}</p>
           </div>
-          <div>
-              <h1>${item.qiymet} AZN</h1>
-              <h1>${Number(item.qiymet.replace(/\s/g, "")) * item.count}</h1>
-              <button onclick="removeBasket(${
-                item.id
-              })" class="rounded-2xl font-bold text-[20px] p-3 text-white border-[2px] border-black bg-red-600" type="button">remove</button>
+          <div class="flex items-center space-x-2">
+            <button onclick="handleCount(-1, ${item.id})" class="px-2 py-1 bg-gray-200 rounded">-</button>
+            <span class="text-lg font-semibold">${item.count}</span>
+            <button onclick="handleCount(+1, ${item.id})" class="px-2 py-1 bg-gray-200 rounded">+</button>
           </div>
+          <p class="text-lg font-semibold">${Number(item.qiymet.replace(/\s/g, "")) * item.count} ₼</p>
+          <button 
+            onclick="removeBasket(${item.id})" 
+            class="p-2 flex items-center text-red-500 hover:text-red-600 hover:bg-gray-100 rounded-full transition-colors"
+            title="Remove item"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+            </svg>Remove
+          </button>
+        </div>
       </div>
     `;
   });
 }
+
 function detailCars(id) {
   search.value = "";
   loadBtn.style.display = "none";
