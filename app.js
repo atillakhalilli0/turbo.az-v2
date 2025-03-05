@@ -109,9 +109,9 @@ function showCars() {
               <div class="pt-3 border-t border-gray-100 flex items-center justify-between">
                 <div class="text-[22px] font-bold text-green-700">${item.qiymet} ₼</div>
                 <div class="flex space-x-2">
-                  <a href="#" onclick="detailCars(${item.id}); event.preventDefault();" class="flex items-center bg-blue-700 hover:bg-blue-800 text-white text-sm font-medium px-3 py-2 rounded-lg transition-colors">
+                 <a href="http://127.0.0.1:5500/details.html?id=${item.id}" target="_blank" onclick="prepareDetailsLink(this, ${item.id}); return true;" class="flex items-center bg-blue-700 hover:bg-blue-800 text-white text-sm font-medium px-3 py-2 rounded-lg transition-colors">
                     <i class="fa-solid fa-eye mr-2"></i> Bax
-                  </a>
+                 </a>
                   <a href="#" onclick="addBasket(${item.id}); event.preventDefault();" class="flex items-center justify-center w-9 h-9 bg-green-200 hover:bg-green-300 text-green-600 hover:text-green-800 rounded-lg transition-colors">
                     <i class="fas fa-shopping-cart"></i>
                   </a>
@@ -408,157 +408,7 @@ function showBasket() {
 }
 
 function detailCars(id) {
-  search.value = "";
-  loadBtn.style.display = "none";
-  cards.innerHTML = "";
-  const car = cars.find((item) => item.id == id);
-  cardetails.innerHTML = `
-  <div class="flex justify-between items-center mb-6 md:flex-nowrap gap-4">
-          <h1 class="text-3xl font-bold text-gray-800 md:text-4xl">
-            ${car.marka} ${car.model} <span class="text-gray-600">${car.il}, ${car.mator}, ${car.reng}</span>
-          </h1>
-          <div class="flex gap-6 items-center">
-            <button class="flex items-center gap-2 text-gray-700 hover:text-red-500 transition group">
-              <i class="fa-regular fa-heart text-xl group-hover:scale-110 transition-transform"></i>
-              <span class="font-medium">Seçilmişlərdə saxla</span>
-            </button>
-            <button class="flex items-center gap-2 text-gray-700 hover:text-blue-500 transition group">
-              <i class="fa-regular fa-flag text-xl group-hover:scale-110 transition-transform"></i>
-              <span class="font-medium">Şikayət et</span>
-            </button>
-          </div>
-        </div>
-        
-        <!-- Main Content -->
-        <div class="bg-white rounded-xl overflow-hidden shadow-lg flex max-md:flex-col">
-          <!-- Image Section -->
-          <div class="w-full lg:w-3/5 relative">
-            <div class="absolute top-3 right-3 bg-yellow-400 bg-opacity-80 text-xs font-semibold px-2 py-1 rounded-md text-black uppercase">
-                Yeni
-              </div>
-            <img class="w-full h-[400px] md:h-[500px] object-cover" src="${car.img}" alt="${car.marka} ${car.model}">
-          </div>
-          
-          <!-- Details Section -->
-          <div class="w-full lg:w-2/5 p-6 lg:p-8 flex flex-col">
-            <!-- Price -->
-            <div class="mb-6">
-              <span class="text-sm text-gray-500 mb-1 block">Qiymət</span>
-              <h2 class="text-3xl md:text-4xl font-bold text-gray-800">${car.qiymet} ₼</h2>
-            </div>
-            
-            <!-- Seller Info -->
-            <div class="flex justify-between items-center mb-6 bg-gray-50 p-4 rounded-lg">
-              <div>
-                <span class="text-sm text-gray-500 block">Satıcı</span>
-                <h3 class="text-xl font-medium text-gray-800">Alverci Elvin</h3>
-              </div>
-              <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
-                <i class="fa-solid fa-user text-2xl text-gray-500"></i>
-              </div>
-            </div>
-            
-            <!-- Actions -->
-            <div class="space-y-3 mb-6">
-              <button onclick="addBasket(${car.id})" type="button" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 text-lg">
-                <i class="fas fa-shopping-cart"></i>
-                <span>Səbətə əlavə et</span>
-              </button>
-              
-              <button class="w-full bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-lg transition-colors">
-                <span class="block text-lg font-medium mb-1">Nömrəni göstər</span>
-                <span class="flex items-center justify-center text-base">
-                  <i class="fa-solid fa-phone mr-2"></i>
-                  +994-50-278-63-••
-                </span>
-              </button>
-            </div>
-            
-            <!-- Promotion Options -->
-            <div class="mt-auto">
-              <h4 class="text-sm text-gray-500 mb-3">Elanı irəli çəkmək üçün</h4>
-              <div class="grid grid-cols-3 gap-3">
-                <div class="bg-white border border-gray-200 rounded-lg p-3 text-center hover:border-blue-400 hover:shadow-md transition cursor-pointer group">
-                  <div class="font-bold text-gray-700 group-hover:text-blue-600 transition">İrəli çək</div>
-                  <div class="text-sm text-gray-600 flex items-center justify-center mt-1">
-                    3 ₼-dən 
-                    <span class="text-green-500 ml-1 group-hover:scale-110 transition-transform">
-                      <i class="fa-solid fa-arrow-up-from-bracket"></i>
-                    </span>
-                  </div>
-                </div>
-                
-                <div class="bg-white border border-gray-200 rounded-lg p-3 text-center hover:border-blue-400 hover:shadow-md transition cursor-pointer group">
-                  <div class="font-bold text-gray-700 group-hover:text-blue-600 transition">VIP</div>
-                  <div class="text-sm text-gray-600 flex items-center justify-center mt-1">
-                    5 ₼-dən
-                    <span class="text-red-500 ml-1 group-hover:scale-110 transition-transform">
-                      <i class="fa-solid fa-gem"></i>
-                    </span>
-                  </div>
-                </div>
-
-                <div class="bg-white border border-gray-200 rounded-lg p-3 text-center hover:border-blue-400 hover:shadow-md transition cursor-pointer group">
-                  <div class="font-bold text-gray-700 group-hover:text-blue-600 transition">Premium</div>
-                  <div class="text-sm text-gray-600 flex items-center justify-center mt-1">
-                    7 ₼-dən
-                    <span class="text-yellow-500 ml-1 group-hover:scale-110 transition-transform">
-                      <i class="fa-solid fa-crown"></i>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Car Specifications -->
-        <div class="mt-8 bg-white rounded-xl shadow-lg p-6">
-          <h3 class="text-xl font-bold text-gray-800 mb-4">Avtomobilin xüsusiyyətləri</h3>
-          
-          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                <i class="fas fa-calendar text-blue-600"></i>
-              </div>
-              <div>
-                <div class="text-sm text-gray-500">İl</div>
-                <div class="font-medium">${car.il}</div>
-              </div>
-            </div>
-            
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                <i class="fas fa-tachometer-alt text-blue-600"></i>
-              </div>
-              <div>
-                <div class="text-sm text-gray-500">Mühərrik</div>
-                <div class="font-medium">${car.mator}</div>
-              </div>
-            </div>
-            
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                <i class="fas fa-palette text-blue-600"></i>
-              </div>
-              <div>
-                <div class="text-sm text-gray-500">Rəng</div>
-                <div class="font-medium">${car.reng}</div>
-              </div>
-            </div>
-            
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                <i class="fas fa-gas-pump text-blue-600"></i>
-              </div>
-              <div>
-                <div class="text-sm text-gray-500">Yanacaq</div>
-                <div class="font-medium">Benzin</div>
-              </div>
-            </div>
-          </div>
-        </div>
-  `;
+  window.location.href = `http://127.0.0.1:5500/details.html?id=${id}`
 }
 
 showCars();
