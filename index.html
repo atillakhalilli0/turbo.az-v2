@@ -6,6 +6,7 @@
             <title>Turbo Az - Masin Alqi Satqi</title>
             <link rel="stylesheet" href="output.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
         </head>
         <body>
             <header>
@@ -126,7 +127,8 @@
                     </div>
                 </div>
             </header> 
-            <main class="py-14 bg-gray-300">        
+            <main class="py-14 bg-gray-300">   
+                <div id="randomCars" class="w-[75%] mx-auto py-3 max-md:gap-3 text-white flex max-md:flex-col items-center max-sm:text-[10px] justify-center"></div>
                 <div id="carContent" class="w-[75%] mx-auto py-3 max-md:gap-3 text-white flex max-md:flex-col items-center max-sm:text-[10px] justify-center">
                     <section class="flex flex-col items-center justify-center">
                         <div class="grid grid-cols-1 [@media(min-width:1200px)]:grid-cols-3 [@media(min-width:1500px)]:grid-cols-4 gap-8 p-6" id="cards"></div>
@@ -137,7 +139,129 @@
                     </section>
                 </div>
             </main>
+            <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
             <script src="data.js"></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    showRandCars();
+                });
+        
+                function showRandCars() {
+                    const randomCars = document.getElementById('randomCars');
+                    
+                    randomCars.innerHTML = '';
+                    
+                    const swiperContainer = document.createElement('div');
+                    swiperContainer.className = 'w-full rounded-[10px] my-4';
+                    
+                    swiperContainer.innerHTML = `
+                        <div class="swiper mySwiper">
+                            <div class="swiper-wrapper"></div>
+                            <div class="swiper-pagination"></div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+                    `;
+                    
+                    randomCars.appendChild(swiperContainer);
+                    
+                    const swiperWrapper = swiperContainer.querySelector('.swiper-wrapper');
+                    
+                    const shuffledCars = shuffleArray([...cars]);
+                    const randomSelection = shuffledCars.slice(0, 12);
+                    
+                    randomSelection.forEach(item => {
+                        const slide = document.createElement('div');
+                        slide.className = 'swiper-slide';
+                        slide.innerHTML = `
+                            <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 h-full">
+                                <div class="relative">
+                                    <img class="h-48 w-full object-cover transition-transform duration-500 hover:scale-105" src="${item.img}" alt="${item.marka} ${item.model}">
+                                    <div class="absolute top-3 right-3 bg-yellow-400 bg-opacity-80 text-xs font-semibold px-2 py-1 rounded-md text-black uppercase">
+                                        Yeni
+                                    </div>
+                                </div>
+                                <div class="p-4">
+                                    <h3 class="text-[22px] font-semibold text-gray-900 mb-2">${item.marka} ${item.model}</h3>
+                                    <div class="flex flex-wrap gap-2 mb-4">
+                                        <span class="inline-flex items-center text-xs bg-gray-100 px-2 py-1 rounded text-gray-600">
+                                            <i class="fas fa-calendar mr-1"></i> ${item.il}
+                                        </span>
+                                        <span class="inline-flex items-center text-xs bg-gray-100 px-2 py-1 rounded text-gray-600">
+                                            <i class="fas fa-tachometer-alt mr-1"></i> ${item.mator}
+                                        </span>
+                                        <span class="inline-flex items-center text-xs bg-gray-100 px-2 py-1 rounded text-gray-600">
+                                            <i class="fas fa-palette mr-1"></i> ${item.reng}
+                                        </span>
+                                    </div>
+                                    <div class="pt-3 border-t border-gray-100 flex items-center justify-between">
+                                        <div class="text-[22px] font-bold text-green-700">${item.qiymet} ₼</div>
+                                        <div class="flex space-x-2">
+                                            <a href="https://turbo-az-v2.vercel.app/details.html?id=${item.id}" target="_blank" onclick="prepareDetailsLink(this, ${item.id}); return true;" class="flex items-center bg-blue-700 hover:bg-blue-800 text-white text-sm font-medium px-3 py-2 rounded-lg transition-colors">
+                                                <i class="fa-solid fa-eye mr-2"></i> Bax
+                                            </a>
+                                            <a href="#" onclick="addBasket(${item.id}); event.preventDefault();" class="flex items-center justify-center w-9 h-9 bg-green-200 hover:bg-green-300 text-green-600 hover:text-green-800 rounded-lg transition-colors">
+                                                <i class="fas fa-shopping-cart"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        swiperWrapper.appendChild(slide);
+                    });
+                    
+                    new Swiper(".mySwiper", {
+                        loop: true,
+                        spaceBetween: 20,
+                        slidesPerView: 1,
+                        autoplay: {
+                            delay: 5000,
+                            disableOnInteraction: false,
+                        },
+                        pagination: {
+                            el: ".swiper-pagination",
+                            clickable: true,
+                        },
+                        navigation: {
+                            nextEl: ".swiper-button-next",
+                            prevEl: ".swiper-button-prev",
+                        },
+                        breakpoints: {
+                            480: {
+                                slidesPerView: 1,
+                                spaceBetween: 10
+                            },
+                            640: {
+                                slidesPerView: 2,
+                                spaceBetween: 15
+                            },
+                            768: {
+                                slidesPerView: 2,
+                                spaceBetween: 15
+                            },
+                            1024: {
+                                slidesPerView: 3,
+                                spaceBetween: 20
+                            },
+                            1280: {
+                                slidesPerView: 4,
+                                spaceBetween: 20
+                            }
+                        },
+                        observer: true,
+                        observeParents: true
+                    });
+                }
+        
+                function shuffleArray(array) {
+                    for (let i = array.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [array[i], array[j]] = [array[j], array[i]];
+                    }
+                    return array;
+                }
+            </script>
             <script src="app.js"></script>
         </body>
         </html>

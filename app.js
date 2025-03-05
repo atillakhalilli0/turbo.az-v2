@@ -18,6 +18,7 @@ const reset = document.getElementById("reset");
 const totalPrice = document.getElementById("totalPrice");
 const carContent = document.getElementById("carContent");
 const carInput = document.getElementById("carInput");
+const randomCars = document.getElementById("randomCars");
 
 function toggleCar() {
   if (
