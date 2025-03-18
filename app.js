@@ -93,6 +93,9 @@ function showCars() {
               <div class="absolute top-3 right-3 bg-yellow-400 bg-opacity-80 text-xs font-semibold px-2 py-1 rounded-md text-black uppercase">
                 Yeni
               </div>
+              <button onclick="addFav(${item.id})" class="absolute w-10 h-10 top-3 left-3 bg-white rounded-full text-gray-400 hover:text-red-600 transition-colors duration-300">
+                <i class="fas fa-heart text-lg"></i>
+              </button>
             </div>
             <div class="p-4">
               <h3 class="text-[22px] font-semibold text-gray-900 mb-2">${item.marka} ${item.model}</h3>
@@ -122,6 +125,18 @@ function showCars() {
           </div> 
         `;
     });
+}
+
+function addFav(id) {
+  const favList = JSON.parse(localStorage.getItem('favList')) || []
+
+  const isElementExists = favList.some(item => item.id == id)
+
+  if (!isElementExists) {
+      const favElement = cars.find(item => item.id == id)
+      favList.push(favElement)
+      localStorage.setItem('favList', JSON.stringify(favList))
+  } else console.warn('this element is already exist in FavList')
 }
 
 function searchCars() {
