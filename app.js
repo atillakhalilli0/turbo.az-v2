@@ -351,7 +351,11 @@ function addCarArray() {
     carInput.style.display = "none";
     carContent.style.display = "block";
   } else {
-    alert("Butun bosluqlari doldur!");
+    Swal.fire({
+      title: "The Internet?",
+      text: "That thing is still around?",
+      icon: "question"
+    });
   }
 }
 
